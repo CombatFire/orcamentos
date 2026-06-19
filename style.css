@@ -1,0 +1,1125 @@
+
+  /* ===== SPLASH SCREEN ===== */
+  #splash{
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    background:linear-gradient(135deg,#161312 0%,#5c0a0a 60%,#8a0303 100%);
+    z-index:9999;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    gap:24px;
+    transition:opacity 0.5s ease;
+  }
+  #splash.fadeout{ opacity:0; pointer-events:none; }
+  #splash.hidden{ display:none; }
+  #splash img{
+    width:190px;height:190px;
+    filter:drop-shadow(0 0 30px rgba(212,160,23,0.6));
+    animation:pulsar 2.2s ease-in-out infinite;
+  }
+  @keyframes pulsar{
+    0%,100%{ transform:scale(1); filter:drop-shadow(0 0 30px rgba(212,160,23,0.5)); }
+    50%{ transform:scale(1.07); filter:drop-shadow(0 0 55px rgba(212,160,23,0.95)); }
+  }
+  #splash h1{
+    color:#f0c75e;font-size:30px;font-weight:900;
+    letter-spacing:4px;margin:0;text-align:center;
+    text-shadow:0 2px 14px rgba(0,0,0,0.7);
+  }
+  #splash p{
+    color:#d4a017;font-size:13px;letter-spacing:5px;
+    margin:-10px 0 0;text-align:center;text-transform:uppercase;
+  }
+  #splash .btn-abrir{
+    margin-top:8px;
+    background:linear-gradient(135deg,#d4a017,#f0c75e);
+    color:#161312;border:none;border-radius:50px;
+    padding:14px 52px;font-size:17px;font-weight:800;
+    cursor:pointer;letter-spacing:1px;
+    box-shadow:0 4px 20px rgba(212,160,23,0.45);
+    transition:transform 0.15s,box-shadow 0.15s;
+  }
+  #splash .btn-abrir:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 28px rgba(212,160,23,0.65);
+  }
+  :root{
+    --vermelho-escuro: #5c0a0a;
+    --vermelho: #8a0303;
+    --vermelho-claro: #b91c1c;
+    --dourado: #d4a017;
+    --dourado-claro: #f0c75e;
+    --preto: #161312;
+    --cinza-texto: #3a3a3a;
+    --cinza-claro: #f7f5f2;
+    --branco: #ffffff;
+  }
+
+  *{box-sizing:border-box;}
+
+  html{
+    overflow-x: hidden;
+  }
+
+  body{
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #e9e6e1;
+    margin:0;
+    padding: 24px;
+    color: var(--cinza-texto);
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .folha{
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--branco);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  /* ===== CABEÇALHO ===== */
+  .cabecalho{
+    background: linear-gradient(135deg, var(--preto) 0%, var(--vermelho-escuro) 55%, var(--vermelho) 100%);
+    color: var(--branco);
+    padding: 28px 32px;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 5px solid var(--dourado);
+  }
+
+  .cabecalho .marca{
+    display:flex;
+    align-items:center;
+    gap: 18px;
+  }
+
+  .cabecalho img.logo{
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    flex-shrink:0;
+    box-shadow: 0 0 0 3px var(--dourado);
+  }
+
+  .cabecalho .empresa-titulo h1{
+    margin:0;
+    font-size: 26px;
+    letter-spacing: 1px;
+    color: var(--dourado-claro);
+    text-transform: uppercase;
+  }
+  .cabecalho .empresa-titulo p{
+    margin: 2px 0 0;
+    font-size: 12.5px;
+    color: #f1d9a8;
+    letter-spacing: 0.5px;
+  }
+
+  .cabecalho .doc-tag{
+    text-align:right;
+  }
+  .cabecalho .doc-tag .tag{
+    background: var(--dourado);
+    color: var(--preto);
+    font-weight:700;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display:inline-block;
+  }
+  .cabecalho .doc-tag .numero{
+    margin-top: 8px;
+    font-size: 12.5px;
+    color: #f1d9a8;
+  }
+  .cabecalho .doc-tag input{
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: var(--branco);
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-size: 12.5px;
+    width: 130px;
+    text-align: right;
+  }
+  .cabecalho .doc-tag input[readonly]{
+    cursor: not-allowed;
+    background: rgba(255,255,255,0.06);
+    color: var(--dourado-claro);
+    font-weight: 600;
+  }
+
+  /* ===== DADOS DAS EMPRESAS ===== */
+  .dados-section{
+    display:flex;
+    gap: 0;
+    border-bottom: 1px solid #e5e0d8;
+  }
+  .dados-col{
+    flex:1;
+    padding: 20px 28px;
+  }
+  .dados-col:first-child{
+    border-right: 1px solid #e5e0d8;
+    background: #fdf9f1;
+  }
+  .dados-col h3{
+    margin: 0 0 10px;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--vermelho);
+    border-bottom: 2px solid var(--dourado);
+    display:inline-block;
+    padding-bottom: 4px;
+  }
+  .campo{
+    margin-bottom: 6px;
+    font-size: 13.5px;
+    display:flex;
+    gap: 6px;
+  }
+  .campo label{
+    font-weight:600;
+    color: #555;
+    min-width: 62px;
+    flex-shrink:0;
+  }
+  .campo input, .campo textarea{
+    border:none;
+    border-bottom: 1px dashed #c9c2b4;
+    background: transparent;
+    font-size: 13.5px;
+    font-family: inherit;
+    color: var(--cinza-texto);
+    width: 100%;
+    padding: 2px 0;
+  }
+  .campo input:focus, .campo textarea:focus{
+    outline:none;
+    border-bottom: 1px solid var(--vermelho);
+  }
+
+  /* ===== META (DATA / VALIDADE) ===== */
+  .meta-section{
+    display:flex;
+    gap: 16px;
+    padding: 14px 28px;
+    background: var(--cinza-claro);
+    border-bottom: 1px solid #e5e0d8;
+    font-size: 13px;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+  .meta-item{
+    display:flex;
+    gap: 6px;
+    align-items:center;
+  }
+  .meta-item label{
+    font-weight:700;
+    color: var(--vermelho);
+  }
+  .meta-item input{
+    border:none;
+    border-bottom: 1px dashed #c9c2b4;
+    background: transparent;
+    font-size: 13px;
+    padding: 2px 4px;
+  }
+
+  /* ===== TABELA DE ITENS ===== */
+  .itens-section{
+    padding: 24px 28px 10px;
+  }
+  .itens-section h3{
+    margin: 0 0 12px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--vermelho);
+  }
+
+  .tabela-scroll-wrapper{
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table#tabela-itens{
+    width:100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  table#tabela-itens thead th{
+    background: var(--vermelho-escuro);
+    color: var(--dourado-claro);
+    text-transform: uppercase;
+    font-size: 11.5px;
+    letter-spacing: 0.5px;
+    padding: 10px 8px;
+    text-align: left;
+  }
+  table#tabela-itens thead th.col-num{ text-align:center; width: 32px; }
+  table#tabela-itens thead th.col-qtd{ text-align:center; width: 70px; }
+  table#tabela-itens thead th.col-valor{ text-align:right; width: 110px; }
+  table#tabela-itens thead th.col-total{ text-align:right; width: 120px; }
+  table#tabela-itens thead th.col-acao{ width: 36px; }
+
+  table#tabela-itens tbody td{
+    padding: 2px 8px;
+    border-bottom: 1px solid #ece7dc;
+    vertical-align: middle;
+    line-height: 1.3;
+  }
+  table#tabela-itens tbody tr:nth-child(even){ background: #fbf9f5; }
+
+  table#tabela-itens td.col-num{ text-align:center; color:#999; font-size:12px; padding-top:2px; }
+
+  table#tabela-itens input, table#tabela-itens textarea, table#tabela-itens select{
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--cinza-texto);
+    padding: 1px 2px;
+    resize: none;
+  }
+  table#tabela-itens textarea{ min-height: 0; }
+  table#tabela-itens .descricao-manual{ margin-top: 0; }
+  table#tabela-itens input:focus, table#tabela-itens textarea:focus, table#tabela-itens select:focus{
+    outline: none;
+    background: #fff8e6;
+  }
+  table#tabela-itens input.qtd{ text-align:center; }
+  table#tabela-itens input.valor-unit{ text-align:right; }
+  table#tabela-itens input.valor-unit[readonly]{ background: #fdf6e3; color: var(--vermelho-escuro); font-weight:600; }
+  table#tabela-itens .valor-total{
+    text-align:right;
+    font-weight:700;
+    color: var(--vermelho-escuro);
+    padding-top: 0;
+    white-space: nowrap;
+  }
+
+  .btn-remover{
+    background: none;
+    border:none;
+    color: #b91c1c;
+    cursor:pointer;
+    font-size: 16px;
+    line-height:1;
+    padding: 4px;
+  }
+  .btn-remover:hover{ color:#7a0000; }
+
+  .btn-add-item{
+    margin-top: 10px;
+    background: var(--branco);
+    border: 1.5px dashed var(--vermelho);
+    color: var(--vermelho);
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor:pointer;
+    font-size: 13px;
+    font-weight:600;
+    display:inline-flex;
+    align-items:center;
+    gap: 6px;
+  }
+  .btn-add-item:hover{ background: #fdf2f2; }
+
+  /* ===== TOTAIS ===== */
+  .totais-section{
+    display:flex;
+    justify-content:flex-end;
+    padding: 16px 28px 24px;
+  }
+  .totais-box{
+    width: 290px;
+  }
+  .linha-total{
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+    padding: 7px 4px;
+    font-size: 13.5px;
+  }
+  .linha-total label{ color:#555; }
+  .linha-total input{
+    border:none;
+    background:transparent;
+    text-align:right;
+    font-size: 13.5px;
+    width: 90px;
+    color: var(--cinza-texto);
+    border-bottom: 1px dashed #c9c2b4;
+  }
+  .linha-total.desconto input{ color: #b91c1c; }
+  .linha-total.total{
+    border-top: 2px solid var(--dourado);
+    margin-top: 6px;
+    padding-top: 12px;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--vermelho-escuro);
+  }
+  .linha-total.total span.valor{
+    color: var(--vermelho-escuro);
+  }
+
+  /* ===== OBSERVAÇÕES / CONDIÇÕES ===== */
+  .obs-section{
+    padding: 6px 28px 24px;
+    display:flex;
+    gap: 24px;
+  }
+  .obs-col{ flex:1; }
+  .obs-col h3{
+    margin: 0 0 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--vermelho);
+  }
+  .obs-col textarea{
+    width:100%;
+    min-height: 70px;
+    border: 1px solid #e5e0d8;
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-family: inherit;
+    font-size: 12.5px;
+    color: var(--cinza-texto);
+    background: #fdfdfb;
+    resize: vertical;
+  }
+  .obs-col textarea:focus{ outline:none; border-color: var(--vermelho); }
+
+  /* ===== ASSINATURAS ===== */
+  .assinaturas{
+    display:flex;
+    gap: 40px;
+    padding: 10px 28px 36px;
+  }
+  .assinatura-item{
+    flex:1;
+    text-align:center;
+  }
+  .linha-assinatura{
+    border-top: 1px solid #999;
+    margin-bottom: 6px;
+    padding-top: 4px;
+  }
+  .assinatura-item .rotulo{
+    font-size: 11.5px;
+    color:#777;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== RODAPÉ ===== */
+  .rodape{
+    background: var(--preto);
+    color: var(--dourado-claro);
+    text-align:center;
+    font-size: 11.5px;
+    padding: 14px;
+    letter-spacing: 0.5px;
+  }
+  .rodape strong{ color: var(--branco); }
+
+  /* ===== BARRA DE AÇÕES (não imprime) ===== */
+  .barra-acoes{
+    max-width: 900px;
+    margin: 0 auto 16px;
+    display:flex;
+    flex-wrap: nowrap;
+    justify-content:center;
+    gap: 10px;
+  }
+  .btn-acao{
+    padding: 10px 14px;
+    border-radius: 5px;
+    border: none;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 6px;
+    white-space: normal;
+    text-align: center;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .btn-imprimir{
+    background: var(--vermelho-escuro);
+    color: #fff;
+  }
+  .btn-imprimir:hover{ background: var(--vermelho); }
+  .btn-pdf{
+    background: var(--dourado);
+    color: var(--preto);
+  }
+  .btn-pdf:hover{ background: var(--dourado-claro); }
+  .btn-produtos{
+    background: var(--branco);
+    color: var(--vermelho-escuro);
+    border: 1.5px solid var(--vermelho-escuro);
+  }
+  .btn-produtos:hover{ background: #fdf2f2; }
+
+  .btn-sheets-config{
+    background: #1a73e8;
+    color: #fff;
+  }
+  .btn-sheets-config:hover{ background: #1557b0; }
+  .btn-sheets-salvar{
+    background: #0f9d58;
+    color: #fff;
+  }
+  .btn-sheets-salvar:hover{ background: #0b7a44; }
+  .btn-sheets-lista{
+    background: #fff;
+    color: #0f9d58;
+    border: 1.5px solid #0f9d58;
+  }
+  .btn-sheets-lista:hover{ background: #f0fdf4; }
+
+  /* Toast de notificação */
+  #toast-sheets{
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: #222;
+    color: #fff;
+    padding: 14px 22px;
+    border-radius: 8px;
+    font-size: 14px;
+    z-index: 9999;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+    display: none;
+    max-width: 360px;
+    line-height: 1.5;
+  }
+  #toast-sheets.toast-ok{ background: #0f9d58; }
+  #toast-sheets.toast-erro{ background: #b91c1c; }
+  #toast-sheets.toast-info{ background: #1a73e8; }
+
+  /* Modal de lista de orçamentos */
+  .orcamento-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    padding:10px 4px;
+    border-bottom:1px solid #ece7dc;
+    font-size:13px;
+  }
+  .orcamento-item-info{ flex:1; }
+  .orcamento-item-num{ font-weight:700; color:var(--vermelho-escuro); }
+  .orcamento-item-cliente{ color:#555; font-size:12px; }
+  .orcamento-item-acoes{ display:flex; gap:6px; }
+  .btn-orcamento-carregar{
+    background:var(--vermelho-escuro);color:#fff;border:none;
+    border-radius:4px;padding:5px 12px;cursor:pointer;font-size:12px;
+  }
+  .btn-orcamento-carregar:hover{ background:var(--vermelho); }
+  .btn-orcamento-apagar{
+    background:none;border:1.5px solid #b91c1c;color:#b91c1c;
+    border-radius:4px;padding:5px 10px;cursor:pointer;font-size:12px;
+  }
+  .btn-orcamento-apagar:hover{ background:#fdf2f2; }
+  .sheets-url-input{
+    width:100%;border:1px solid #d8d2c5;border-radius:5px;
+    padding:9px 10px;font-size:13.5px;font-family:inherit;box-sizing:border-box;
+  }
+  .sheets-url-input:focus{ outline:none; border-color:var(--vermelho); }
+  .instrucoes-sheets{
+    background:#f7f5f2;border:1px solid #e5e0d8;border-radius:6px;
+    padding:14px 16px;font-size:12.5px;color:#444;line-height:1.7;margin-top:14px;
+  }
+  .instrucoes-sheets code{
+    background:#ece7dc;padding:1px 5px;border-radius:3px;font-size:12px;
+    word-break:break-all;
+  }
+  .instrucoes-sheets h4{ margin:0 0 8px; color:var(--vermelho-escuro); font-size:13px; }
+  .instrucoes-sheets ol{ margin:0; padding-left:18px; }
+  .instrucoes-sheets li{ margin-bottom:4px; }
+  .instrucoes-sheets a{ color:#1a73e8; }
+
+  /* ===== MODAL CONFIGURAÇÕES ===== */
+  .btn-config-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:#fdf9f1;
+    border:1px solid #e5e0d8;
+    border-radius:8px;
+    padding:14px 16px;
+    cursor:pointer;
+    text-align:left;
+    width:100%;
+    transition: background 0.15s;
+  }
+  .btn-config-item:hover{ background:#f5efe0; border-color:#d4a017; }
+  .btn-config-icone{
+    width:42px;height:42px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;flex-shrink:0;color:#fff;
+  }
+  .btn-config-titulo{ font-weight:700;font-size:14px;color:var(--cinza-texto);margin-bottom:2px; }
+  .btn-config-desc{ font-size:12px;color:#777;line-height:1.4; }
+
+  /* ===== MODAL GERENCIAR PRODUTOS ===== */
+  .modal-overlay{
+    display:none;
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.55);
+    z-index: 1000;
+    align-items:center;
+    justify-content:center;
+    padding: 20px;
+  }
+  .modal-overlay.ativo{ display:flex; }
+  .modal-box{
+    background: var(--branco);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 640px;
+    max-height: 85vh;
+    overflow:auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  }
+  .modal-header{
+    background: linear-gradient(135deg, var(--preto) 0%, var(--vermelho-escuro) 100%);
+    color: var(--branco);
+    padding: 18px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom: 4px solid var(--dourado);
+    position: sticky;
+    top:0;
+  }
+  .modal-header h2{
+    margin:0;
+    font-size: 17px;
+    color: var(--dourado-claro);
+    letter-spacing: 0.5px;
+  }
+  .modal-fechar{
+    background:none;
+    border:none;
+    color: var(--branco);
+    font-size: 22px;
+    cursor:pointer;
+    line-height:1;
+    padding: 0 4px;
+  }
+  .modal-fechar:hover{ color: var(--dourado-claro); }
+  .modal-body{ padding: 22px 24px; }
+
+  .form-novo-produto{
+    display:flex;
+    gap: 10px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .form-novo-produto input{
+    border: 1px solid #d8d2c5;
+    border-radius: 5px;
+    padding: 9px 10px;
+    font-size: 13.5px;
+    font-family: inherit;
+  }
+  .form-novo-produto input.nome-produto{ flex: 1; min-width: 180px; }
+  .form-novo-produto input.preco-produto{ width: 120px; }
+  .btn-add-produto{
+    background: var(--vermelho-escuro);
+    color: var(--branco);
+    border:none;
+    border-radius: 5px;
+    padding: 9px 18px;
+    font-size: 13.5px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .btn-add-produto:hover{ background: var(--vermelho); }
+
+  .lista-produtos{
+    border-top: 1px solid #ece7dc;
+  }
+  .produto-item{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    padding: 10px 4px;
+    border-bottom: 1px solid #ece7dc;
+  }
+  .produto-item input.nome-edit{
+    flex:1;
+    border:none;
+    background:transparent;
+    font-size: 13.5px;
+    padding: 4px 2px;
+    font-family: inherit;
+  }
+  .produto-item input.preco-edit{
+    width: 100px;
+    border:none;
+    background:transparent;
+    font-size: 13.5px;
+    text-align:right;
+    padding: 4px 2px;
+    font-family: inherit;
+    color: var(--vermelho-escuro);
+    font-weight:600;
+  }
+  .produto-item input:focus{ outline:none; background: #fff8e6; border-radius: 3px; }
+  .produto-item .btn-remover-produto{
+    background:none;
+    border:none;
+    color:#b91c1c;
+    cursor:pointer;
+    font-size: 16px;
+    padding: 4px;
+  }
+  .lista-vazia{
+    text-align:center;
+    color: #999;
+    font-size: 13px;
+    padding: 24px 0;
+  }
+  .modal-footer-info{
+    margin-top: 16px;
+    font-size: 12px;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  /* ===== SELECT DE PRODUTO NA TABELA ===== */
+  select.select-produto{
+    width:100%;
+    border:none;
+    background: transparent;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--cinza-texto);
+    padding: 4px 2px;
+  }
+  select.select-produto:focus{ outline:none; background:#fff8e6; }
+
+  /* span de descrição: sempre atualizado, visível só na impressão */
+  .texto-print{ display: none; font-size: 10px; color: var(--cinza-texto); }
+  .print-descricao{ display: none; }
+
+  /* Ocultar placeholder na impressão */
+  @media print {
+    input::placeholder, textarea::placeholder { color: transparent !important; }
+  }
+
+  @media print{
+    @page {
+      size: A4 portrait;
+      margin: 8mm 10mm 8mm 10mm;
+    }
+
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+    html, body {
+      background: #fff !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      font-size: 10.5px !important;
+      width: 100% !important;
+    }
+
+    .barra-acoes{ display:none !important; }
+    .tabela-scroll-wrapper{ overflow: visible !important; }
+    table#tabela-itens{ min-width: 0 !important; }
+    input::placeholder, textarea::placeholder{ color:transparent !important; }
+    .modal-overlay{ display:none !important; }
+    .btn-remover, .btn-add-item{ display:none !important; }
+    select.select-produto{ display:none !important; }
+    .texto-print{ display: block !important; }
+    .texto-selecionado{ display: block !important; }
+    .trocar-manual{ display: none !important; }
+
+    .folha{
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      max-width: 100% !important;
+      width: 100% !important;
+      margin: 0 !important;
+    }
+
+    /* ── Cabeçalho compacto ── */
+    .cabecalho{
+      padding: 10px 14px !important;
+      gap: 10px !important;
+      border-bottom: 3px solid var(--dourado) !important;
+    }
+    .cabecalho img.logo{
+      width: 52px !important;
+      height: 52px !important;
+    }
+    .cabecalho .marca{ gap: 10px !important; }
+    .cabecalho .empresa-titulo h1{ font-size: 16px !important; }
+    .cabecalho .empresa-titulo p{ font-size: 9px !important; }
+    .cabecalho .doc-tag .tag{ font-size: 10px !important; padding: 4px 10px !important; }
+    .cabecalho .doc-tag .numero{ font-size: 9.5px !important; margin-top: 4px !important; }
+    .cabecalho .doc-tag input{ font-size: 9.5px !important; width: 100px !important; }
+
+    /* ── Dados das empresas compacto ── */
+    .dados-col{ padding: 8px 12px !important; }
+    .dados-col h3{ font-size: 9.5px !important; margin-bottom: 5px !important; }
+    .campo{ margin-bottom: 3px !important; font-size: 10px !important; }
+    .campo label{ min-width: 52px !important; font-size: 10px !important; }
+    .campo input, .campo textarea{ font-size: 10px !important; padding: 1px 0 !important; }
+
+    /* ── Meta (data / validade) compacto ── */
+    .meta-section{
+      padding: 6px 12px !important;
+      gap: 10px !important;
+      font-size: 10px !important;
+      flex-wrap: nowrap !important;
+      overflow: hidden !important;
+    }
+    .meta-item{ flex-shrink: 1; min-width: 0; }
+    .meta-item input{ font-size: 10px !important; min-width: 0 !important; }
+    .meta-item:last-child{ flex: 1; min-width: 0; }
+    .meta-item:last-child input{ width: 100% !important; }
+
+    /* ── Tabela de itens compacta ── */
+    .itens-section{
+      padding: 8px 12px 4px !important;
+    }
+    .itens-section h3{ font-size: 10px !important; margin-bottom: 5px !important; }
+
+    table#tabela-itens{ font-size: 10px !important; }
+    table#tabela-itens thead th{
+      padding: 5px 5px !important;
+      font-size: 9px !important;
+    }
+    table#tabela-itens tbody td{
+      padding: 2px 5px !important;
+      font-size: 10px !important;
+      border-bottom: 1px solid #e0dbd0 !important;
+      vertical-align: middle !important;
+      line-height: 1.3 !important;
+    }
+    table#tabela-itens td.col-num{ font-size: 9.5px !important; padding-top: 2px !important; }
+    table#tabela-itens .valor-total{ padding-top: 0 !important; font-size: 10px !important; }
+
+    /* mostrar texto do select como texto simples na impressão */
+    table#tabela-itens .celula-descricao::before{
+      content: attr(data-descricao);
+    }
+    table#tabela-itens textarea.descricao-manual{
+      display: none !important;
+    }
+    table#tabela-itens input, table#tabela-itens textarea{
+      font-size: 10px !important;
+      padding: 1px 2px !important;
+    }
+    input, textarea{ border-bottom: none !important; border: none !important; }
+
+    /* ── Totais compacto ── */
+    .totais-section{
+      padding: 6px 12px 10px !important;
+    }
+    .totais-box{ width: 220px !important; }
+    .linha-total{
+      padding: 4px 2px !important;
+      font-size: 10.5px !important;
+    }
+    .linha-total input{ font-size: 10.5px !important; width: 75px !important; }
+    .linha-total.total{
+      font-size: 13px !important;
+      padding-top: 6px !important;
+      margin-top: 3px !important;
+    }
+
+    /* ── Observações compacto ── */
+    .obs-section{
+      padding: 4px 12px 10px !important;
+      gap: 14px !important;
+    }
+    .obs-col h3{ font-size: 9.5px !important; margin-bottom: 4px !important; }
+    .obs-col textarea{
+      min-height: 40px !important;
+      font-size: 9.5px !important;
+      padding: 4px 6px !important;
+    }
+
+    /* ── Assinaturas compacto ── */
+    .assinaturas{
+      padding: 6px 12px 16px !important;
+      gap: 28px !important;
+    }
+    .assinatura-item .rotulo{ font-size: 9.5px !important; }
+
+    /* ── Rodapé compacto ── */
+    .rodape{ font-size: 9px !important; padding: 8px !important; }
+
+    /* ── Quebra de página: cabeçalho se repete, itens não quebram no meio ── */
+    .cabecalho{ page-break-inside: avoid !important; break-inside: avoid !important; }
+    table#tabela-itens{ page-break-inside: auto !important; }
+    table#tabela-itens thead{ display: table-header-group !important; }
+    table#tabela-itens tbody tr{
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+    .totais-section, .obs-section, .assinaturas, .rodape{
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+  }
+
+  /* =====================================================================
+     ESTILOS EXCLUSIVOS PARA EXPORTAÇÃO DE PDF (html2canvas / html2pdf)
+     Aplicados via body.gerando-pdf — a tela NÃO usa @media print porque
+     o html2canvas "fotografa" a tela normal, ignorando regras de impressão.
+     Este bloco é ainda mais compacto que o de impressão, para caber mais
+     itens por folha.
+     ===================================================================== */
+  body.gerando-pdf{
+    background: #fff !important;
+  }
+  body.gerando-pdf input::placeholder, body.gerando-pdf textarea::placeholder{
+    color: transparent !important;
+  }
+  body.gerando-pdf #btn-buscar-cnpj,
+  body.gerando-pdf #btn-buscar-cep,
+  body.gerando-pdf #cnpj-status,
+  body.gerando-pdf #cep-status{
+    display: none !important;
+  }
+  body.gerando-pdf .folha{
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    font-size: 12px !important;
+  }
+  body.gerando-pdf .barra-acoes{ display:none !important; }
+  body.gerando-pdf .tabela-scroll-wrapper{ overflow: visible !important; }
+  body.gerando-pdf table#tabela-itens{ min-width: 0 !important; }
+  body.gerando-pdf .modal-overlay{ display:none !important; }
+  body.gerando-pdf .btn-remover, body.gerando-pdf .btn-add-item{ display:none !important; }
+  body.gerando-pdf select.select-produto{ display:none !important; }
+  body.gerando-pdf .texto-print{ display:block !important; }
+  body.gerando-pdf .texto-selecionado{ display:block !important; }
+  body.gerando-pdf .trocar-manual{ display:none !important; }
+
+  /* ── Cabeçalho ── */
+  body.gerando-pdf .cabecalho{
+    padding: 7px 12px !important;
+    gap: 8px !important;
+    border-bottom: 2px solid var(--dourado) !important;
+  }
+  body.gerando-pdf .cabecalho img.logo{ width: 42px !important; height: 42px !important; }
+  body.gerando-pdf .cabecalho .marca{ gap: 8px !important; }
+  body.gerando-pdf .cabecalho .empresa-titulo h1{ font-size: 16px !important; }
+  body.gerando-pdf .cabecalho .empresa-titulo p{ font-size: 12px !important; }
+  body.gerando-pdf .cabecalho .doc-tag .tag{ font-size: 12px !important; padding: 3px 8px !important; }
+  body.gerando-pdf .cabecalho .doc-tag .numero{ font-size: 12px !important; margin-top: 3px !important; }
+  body.gerando-pdf .cabecalho .doc-tag input{ font-size: 12px !important; width: 90px !important; }
+
+  /* ── Dados das empresas ── */
+  body.gerando-pdf .dados-col{ padding: 6px 10px !important; }
+  body.gerando-pdf .dados-col:first-child{ padding: 6px 10px !important; }
+  body.gerando-pdf .dados-col h3{ font-size: 12px !important; margin-bottom: 3px !important; }
+  body.gerando-pdf .campo{ margin-bottom: 2px !important; font-size: 12px !important; }
+  body.gerando-pdf .campo label{ min-width: 48px !important; font-size: 12px !important; }
+  body.gerando-pdf .campo input, body.gerando-pdf .campo textarea{ font-size: 12px !important; padding: 1px 0 !important; width: 100% !important; }
+
+  /* ── Meta (data / validade) ── */
+  body.gerando-pdf .meta-section{
+    padding: 4px 10px !important;
+    gap: 8px !important;
+    font-size: 12px !important;
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
+  }
+  body.gerando-pdf .meta-item{ flex-shrink: 1; min-width: 0; }
+  body.gerando-pdf .meta-item input{ font-size: 12px !important; min-width: 0 !important; }
+  body.gerando-pdf .meta-item:last-child{ flex: 1; min-width: 0; }
+  body.gerando-pdf .meta-item:last-child input{ width: 100% !important; }
+
+  /* ── Tabela de itens (mais compacta que a impressão) ── */
+  body.gerando-pdf .itens-section{ padding: 6px 10px 3px !important; }
+  body.gerando-pdf .itens-section h3{ font-size: 12px !important; margin-bottom: 3px !important; }
+
+  body.gerando-pdf table#tabela-itens{ font-size: 12px !important; }
+  body.gerando-pdf table#tabela-itens thead th{
+    padding: 3px 4px !important;
+    font-size: 12px !important;
+  }
+  body.gerando-pdf table#tabela-itens tbody td{
+    padding: 1px 4px !important;
+    font-size: 12px !important;
+    border-bottom: 1px solid #e0dbd0 !important;
+    vertical-align: middle !important;
+    line-height: 1.1 !important;
+  }
+  body.gerando-pdf table#tabela-itens td.col-num{ font-size: 12px !important; padding-top: 1px !important; }
+  body.gerando-pdf table#tabela-itens .valor-total{ padding-top: 0 !important; font-size: 12px !important; }
+
+  body.gerando-pdf table#tabela-itens .celula-descricao::before{
+    content: attr(data-descricao);
+  }
+  body.gerando-pdf table#tabela-itens textarea.descricao-manual{ display: none !important; }
+  body.gerando-pdf table#tabela-itens input, body.gerando-pdf table#tabela-itens textarea{
+    font-size: 12px !important;
+    padding: 0px 2px !important;
+  }
+  body.gerando-pdf input, body.gerando-pdf textarea{ border-bottom: none !important; border: none !important; }
+
+  /* ── Totais ── */
+  body.gerando-pdf .totais-section{ padding: 4px 10px 6px !important; }
+  body.gerando-pdf .totais-box{ width: 200px !important; }
+  body.gerando-pdf .linha-total{
+    padding: 2px 2px !important;
+    font-size: 12px !important;
+  }
+  body.gerando-pdf .linha-total input{ font-size: 12px !important; width: 70px !important; }
+  body.gerando-pdf .linha-total.total{
+    font-size: 13px !important;
+    padding-top: 4px !important;
+    margin-top: 2px !important;
+  }
+
+  /* ── Observações ── */
+  body.gerando-pdf .obs-section{
+    padding: 3px 10px 6px !important;
+    gap: 12px !important;
+  }
+  body.gerando-pdf .obs-col h3{ font-size: 12px !important; margin-bottom: 3px !important; }
+  body.gerando-pdf .obs-col textarea{
+    min-height: 30px !important;
+    font-size: 12px !important;
+    padding: 3px 5px !important;
+  }
+
+  /* ── Assinaturas ── */
+  body.gerando-pdf .assinaturas{
+    padding: 4px 10px 10px !important;
+    gap: 22px !important;
+  }
+  body.gerando-pdf .assinatura-item .rotulo{ font-size: 12px !important; }
+
+  /* ── Rodapé ── */
+  body.gerando-pdf .rodape{ font-size: 12px !important; padding: 6px !important; }
+
+  /* =====================================================================
+     RESPONSIVIDADE — TABLET E CELULAR
+     A folha nunca usa largura fixa: ela se adapta ao viewport em todos
+     os tamanhos de tela, do desktop ao celular pequeno.
+     ===================================================================== */
+
+  /* ── TABLET (até 900px): ajustes de espaçamento e tamanho ── */
+  @media (max-width: 900px){
+    body{ padding: 14px; }
+    .folha{ max-width: 100%; }
+    .barra-acoes{ max-width: 100%; justify-content:center; }
+    .btn-acao{ flex: 1 1 auto; min-width: 150px; }
+
+    .cabecalho{ padding: 22px 20px; flex-wrap: wrap; }
+    .cabecalho img.logo{ width: 70px; height: 70px; }
+    .cabecalho .empresa-titulo h1{ font-size: 22px; }
+
+    .dados-col{ padding: 16px 20px; }
+    .meta-section{ flex-wrap: wrap; row-gap: 8px; align-items: flex-start; }
+    .itens-section, .totais-section, .obs-section, .assinaturas{ padding-left: 20px; padding-right: 20px; }
+    .totais-box{ width: 260px; }
+  }
+
+  /* ── CELULAR (até 640px): empilha colunas, ajusta cabeçalho ── */
+  @media (max-width: 640px){
+    body{ padding: 10px; }
+
+    .barra-acoes{ justify-content:stretch; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+    .btn-acao{ flex: 1 1 calc(50% - 8px); min-width: 0; padding: 10px 8px; font-size: 13px; }
+
+    .cabecalho{
+      flex-direction:column;
+      align-items:flex-start;
+      padding: 20px 16px;
+      gap: 14px;
+    }
+    .cabecalho .marca{ width:100%; }
+    .cabecalho img.logo{ width: 60px; height: 60px; }
+    .cabecalho .empresa-titulo h1{ font-size: 20px; }
+    .cabecalho .empresa-titulo p{ font-size: 11.5px; }
+    .cabecalho .doc-tag{ text-align:left; width:100%; }
+    .cabecalho .doc-tag input{ width: 140px; }
+
+    .dados-section{ flex-direction:column; }
+    .dados-col{ padding: 16px; }
+    .dados-col:first-child{ border-right:none; border-bottom:1px solid #e5e0d8; }
+    .campo{ flex-wrap: wrap; }
+    .campo label{ min-width: 100%; margin-bottom: 1px; }
+
+    .meta-section{ flex-direction:column; align-items:flex-start; gap:8px; padding: 14px 16px; }
+    .meta-item{ width:100%; }
+    .meta-item input{ flex:1; min-width:0; }
+
+    .itens-section{ padding: 18px 16px 10px; }
+    table#tabela-itens{ font-size: 12px; min-width: 520px; }
+
+    .totais-section{ padding: 14px 16px 20px; justify-content:center; }
+    .totais-box{ width: 100%; max-width: 320px; }
+
+    .obs-section{ flex-direction:column; padding: 6px 16px 20px; }
+    .assinaturas{ flex-direction:column; gap: 24px; padding: 10px 16px 28px; }
+
+    .modal-box{ max-width: 100%; margin: 0 8px; }
+    .modal-overlay{ padding: 10px; }
+    .modal-header{ padding: 14px 16px; }
+    .modal-body{ padding: 16px; }
+    .form-novo-produto{ flex-direction:column; }
+    .form-novo-produto input.nome-produto,
+    .form-novo-produto input.preco-produto{ width:100%; min-width:0; }
+    .btn-add-produto{ width:100%; }
+
+    .produto-item{ flex-wrap: wrap; }
+
+    #toast-sheets{
+      left: 12px; right: 12px; bottom: 16px; max-width: none;
+    }
+  }
+
+  /* ── CELULAR PEQUENO (até 420px): compacta ainda mais ── */
+  @media (max-width: 420px){
+    .cabecalho .empresa-titulo h1{ font-size: 18px; letter-spacing: 0.5px; }
+    .cabecalho .doc-tag .tag{ font-size: 11.5px; padding: 5px 12px; }
+    .btn-acao{ flex: 1 1 100%; }
+    table#tabela-itens{ font-size: 11.5px; min-width: 480px; }
+    .totais-box{ width: 100%; }
+  }
+
+  /* ── Toque: alvos maiores em telas sensíveis ao toque ── */
+  @media (hover: none) and (pointer: coarse){
+    .btn-remover, .btn-orcamento-apagar, .btn-remover-produto, .modal-fechar{
+      padding: 8px;
+      min-width: 32px;
+      min-height: 32px;
+    }
+    .btn-acao, .btn-add-item, .btn-add-produto, .btn-orcamento-carregar{
+      min-height: 40px;
+    }
+  }
