@@ -20,12 +20,18 @@
 
   *{box-sizing:border-box;}
 
+  html{
+    overflow-x: hidden;
+  }
+
   body{
     font-family: 'Segoe UI', Arial, sans-serif;
     background: #e9e6e1;
     margin:0;
     padding: 24px;
     color: var(--cinza-texto);
+    overflow-x: hidden;
+    width: 100%;
   }
 
   .folha{
@@ -204,8 +210,15 @@
     color: var(--vermelho);
   }
 
+  .tabela-scroll-wrapper{
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   table#tabela-itens{
     width:100%;
+    min-width: 560px;
     border-collapse: collapse;
     font-size: 13px;
   }
@@ -393,6 +406,7 @@
     max-width: 900px;
     margin: 0 auto 16px;
     display:flex;
+    flex-wrap: wrap;
     justify-content:flex-end;
     gap: 10px;
   }
@@ -405,7 +419,9 @@
     cursor: pointer;
     display:flex;
     align-items:center;
+    justify-content:center;
     gap: 8px;
+    white-space: nowrap;
   }
   .btn-imprimir{
     background: var(--vermelho-escuro);
@@ -496,6 +512,7 @@
   }
   .instrucoes-sheets code{
     background:#ece7dc;padding:1px 5px;border-radius:3px;font-size:12px;
+    word-break:break-all;
   }
   .instrucoes-sheets h4{ margin:0 0 8px; color:var(--vermelho-escuro); font-size:13px; }
   .instrucoes-sheets ol{ margin:0; padding-left:18px; }
@@ -668,6 +685,8 @@
     }
 
     .barra-acoes{ display:none !important; }
+    .tabela-scroll-wrapper{ overflow: visible !important; }
+    table#tabela-itens{ min-width: 0 !important; }
     input::placeholder, textarea::placeholder{ color:transparent !important; }
     .modal-overlay{ display:none !important; }
     .btn-remover, .btn-add-item{ display:none !important; }
@@ -835,6 +854,8 @@
     font-size: 12px !important;
   }
   body.gerando-pdf .barra-acoes{ display:none !important; }
+  body.gerando-pdf .tabela-scroll-wrapper{ overflow: visible !important; }
+  body.gerando-pdf table#tabela-itens{ min-width: 0 !important; }
   body.gerando-pdf .modal-overlay{ display:none !important; }
   body.gerando-pdf .btn-remover, body.gerando-pdf .btn-add-item{ display:none !important; }
   body.gerando-pdf select.select-produto{ display:none !important; }
@@ -942,15 +963,103 @@
   /* ── Rodapé ── */
   body.gerando-pdf .rodape{ font-size: 12px !important; padding: 6px !important; }
 
+  /* =====================================================================
+     RESPONSIVIDADE — TABLET E CELULAR
+     A folha nunca usa largura fixa: ela se adapta ao viewport em todos
+     os tamanhos de tela, do desktop ao celular pequeno.
+     ===================================================================== */
+
+  /* ── TABLET (até 900px): ajustes de espaçamento e tamanho ── */
+  @media (max-width: 900px){
+    body{ padding: 14px; }
+    .folha{ max-width: 100%; }
+    .barra-acoes{ max-width: 100%; justify-content:center; }
+    .btn-acao{ flex: 1 1 auto; min-width: 150px; }
+
+    .cabecalho{ padding: 22px 20px; flex-wrap: wrap; }
+    .cabecalho img.logo{ width: 70px; height: 70px; }
+    .cabecalho .empresa-titulo h1{ font-size: 22px; }
+
+    .dados-col{ padding: 16px 20px; }
+    .meta-section{ flex-wrap: wrap; row-gap: 8px; align-items: flex-start; }
+    .itens-section, .totais-section, .obs-section, .assinaturas{ padding-left: 20px; padding-right: 20px; }
+    .totais-box{ width: 260px; }
+  }
+
+  /* ── CELULAR (até 640px): empilha colunas, ajusta cabeçalho ── */
   @media (max-width: 640px){
-    .cabecalho{ flex-direction:column; align-items:flex-start; }
+    body{ padding: 10px; }
+
+    .barra-acoes{ justify-content:stretch; gap: 8px; margin-bottom: 12px; }
+    .btn-acao{ flex: 1 1 calc(50% - 8px); min-width: 0; padding: 10px 8px; font-size: 13px; }
+
+    .cabecalho{
+      flex-direction:column;
+      align-items:flex-start;
+      padding: 20px 16px;
+      gap: 14px;
+    }
+    .cabecalho .marca{ width:100%; }
+    .cabecalho img.logo{ width: 60px; height: 60px; }
+    .cabecalho .empresa-titulo h1{ font-size: 20px; }
+    .cabecalho .empresa-titulo p{ font-size: 11.5px; }
     .cabecalho .doc-tag{ text-align:left; width:100%; }
+    .cabecalho .doc-tag input{ width: 140px; }
+
     .dados-section{ flex-direction:column; }
+    .dados-col{ padding: 16px; }
     .dados-col:first-child{ border-right:none; border-bottom:1px solid #e5e0d8; }
-    .meta-section{ flex-direction:column; gap:8px; }
-    .obs-section{ flex-direction:column; }
-    .assinaturas{ flex-direction:column; gap: 24px; }
-    table#tabela-itens{ font-size: 11.5px; }
+    .campo{ flex-wrap: wrap; }
+    .campo label{ min-width: 100%; margin-bottom: 1px; }
+
+    .meta-section{ flex-direction:column; align-items:flex-start; gap:8px; padding: 14px 16px; }
+    .meta-item{ width:100%; }
+    .meta-item input{ flex:1; min-width:0; }
+
+    .itens-section{ padding: 18px 16px 10px; }
+    table#tabela-itens{ font-size: 12px; min-width: 520px; }
+
+    .totais-section{ padding: 14px 16px 20px; justify-content:center; }
+    .totais-box{ width: 100%; max-width: 320px; }
+
+    .obs-section{ flex-direction:column; padding: 6px 16px 20px; }
+    .assinaturas{ flex-direction:column; gap: 24px; padding: 10px 16px 28px; }
+
+    .modal-box{ max-width: 100%; margin: 0 8px; }
+    .modal-overlay{ padding: 10px; }
+    .modal-header{ padding: 14px 16px; }
+    .modal-body{ padding: 16px; }
+    .form-novo-produto{ flex-direction:column; }
+    .form-novo-produto input.nome-produto,
+    .form-novo-produto input.preco-produto{ width:100%; min-width:0; }
+    .btn-add-produto{ width:100%; }
+
+    .produto-item{ flex-wrap: wrap; }
+
+    #toast-sheets{
+      left: 12px; right: 12px; bottom: 16px; max-width: none;
+    }
+  }
+
+  /* ── CELULAR PEQUENO (até 420px): compacta ainda mais ── */
+  @media (max-width: 420px){
+    .cabecalho .empresa-titulo h1{ font-size: 18px; letter-spacing: 0.5px; }
+    .cabecalho .doc-tag .tag{ font-size: 11.5px; padding: 5px 12px; }
+    .btn-acao{ flex: 1 1 100%; }
+    table#tabela-itens{ font-size: 11.5px; min-width: 480px; }
+    .totais-box{ width: 100%; }
+  }
+
+  /* ── Toque: alvos maiores em telas sensíveis ao toque ── */
+  @media (hover: none) and (pointer: coarse){
+    .btn-remover, .btn-orcamento-apagar, .btn-remover-produto, .modal-fechar{
+      padding: 8px;
+      min-width: 32px;
+      min-height: 32px;
+    }
+    .btn-acao, .btn-add-item, .btn-add-produto, .btn-orcamento-carregar{
+      min-height: 40px;
+    }
   }
 </style>
 </head>
@@ -1030,6 +1139,7 @@
   <!-- ITENS -->
   <div class="itens-section">
     <h3>Produtos / Serviços</h3>
+    <div class="tabela-scroll-wrapper">
     <table id="tabela-itens">
       <thead>
         <tr>
@@ -1045,6 +1155,7 @@
         <!-- linhas inseridas via JS -->
       </tbody>
     </table>
+    </div>
     <button class="btn-add-item" onclick="adicionarLinha()">+ Adicionar item</button>
   </div>
 
