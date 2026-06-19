@@ -406,22 +406,25 @@
     max-width: 900px;
     margin: 0 auto 16px;
     display:flex;
-    flex-wrap: wrap;
-    justify-content:flex-end;
+    flex-wrap: nowrap;
+    justify-content:center;
     gap: 10px;
   }
   .btn-acao{
-    padding: 10px 20px;
+    padding: 10px 14px;
     border-radius: 5px;
     border: none;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     display:flex;
     align-items:center;
     justify-content:center;
-    gap: 8px;
-    white-space: nowrap;
+    gap: 6px;
+    white-space: normal;
+    text-align: center;
+    flex: 1 1 0;
+    min-width: 0;
   }
   .btn-imprimir{
     background: var(--vermelho-escuro);
@@ -990,7 +993,7 @@
   @media (max-width: 640px){
     body{ padding: 10px; }
 
-    .barra-acoes{ justify-content:stretch; gap: 8px; margin-bottom: 12px; }
+    .barra-acoes{ justify-content:stretch; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
     .btn-acao{ flex: 1 1 calc(50% - 8px); min-width: 0; padding: 10px 8px; font-size: 13px; }
 
     .cabecalho{
@@ -1069,8 +1072,9 @@
   <button class="btn-acao btn-produtos" onclick="abrirModalProdutos()">🗂️ Gerenciar Produtos</button>
   <button class="btn-acao btn-sheets-config" onclick="abrirModalSheets()" title="Configurar Google Sheets">⚙️ Google Sheets</button>
   <button class="btn-acao btn-sheets-lista" onclick="abrirModalListaOrcamentos()" title="Ver orçamentos salvos">📋 Orçamentos Salvos</button>
-  <button class="btn-acao btn-sheets-salvar" onclick="salvarNoSheets()" title="Salvar/Atualizar no Google Sheets">☁️ Salvar no Sheets</button>
-  <button class="btn-acao btn-sheets-salvar" onclick="salvarESair()" title="Salvar no Sheets e abrir novo orçamento" style="background:#1a7a1a;color:#fff;">💾 Salvar e Novo</button>
+  <button class="btn-acao btn-sheets-salvar" onclick="salvarESair()" title="Salvar no Sheets e abrir novo orçamento" style="background:#1a7a1a;color:#fff;">💾 Novo</button>
+  <button class="btn-acao" onclick="fazerBackup()" title="Baixar backup de todos os dados" style="background:#6d28d9;color:#fff;">⬇️ Backup</button>
+  <button class="btn-acao" onclick="restaurarBackup()" title="Restaurar backup de arquivo" style="background:#92400e;color:#fff;">⬆️ Restaurar</button>
   <button class="btn-acao btn-imprimir" onclick="window.print()">🖨️ Imprimir</button>
   <button class="btn-acao btn-pdf" onclick="exportarPDF()">📄 Exportar PDF</button>
 </div>
@@ -1460,7 +1464,7 @@ function criarLinha(){
       <textarea class="descricao-manual" rows="1" style="display:none;" oninput="autoResize(this)"></textarea>
       <span class="trocar-manual" style="display:none; cursor:pointer; font-size:11px; color:#1a73e8; text-decoration:underline;" onclick="voltarParaSelect(this)" title="Selecionar produto do catálogo">🔄 Selecionar do catálogo</span>
     </td>
-    <td><input type="text" class="qtd" value="1" oninput="formatarQtd(this); calcularLinha(this)"></td>
+    <td><input type="text" class="qtd" value="1" onfocus="var el=this;setTimeout(function(){el.select();},50);" onclick="var el=this;setTimeout(function(){el.select();},50);" oninput="formatarQtd(this); calcularLinha(this)"></td>
     <td><input type="text" class="valor-unit" value="0,00" oninput="formatarMoedaInput(this); calcularLinha(this)"></td>
     <td class="valor-total">R$ 0,00</td>
     <td><button class="btn-remover" onclick="removerLinha(this)" title="Remover item">✕</button></td>
@@ -2328,6 +2332,64 @@ window.addEventListener('DOMContentLoaded', function(){
   folhaEl.addEventListener('input', agendarSalvarRascunho);
   folhaEl.addEventListener('change', agendarSalvarRascunho);
 });
+
+// ===== BACKUP E RESTAURAÇÃO =====
+function fazerBackup(){
+  try{
+    const backup = {
+      versao: '1.0',
+      data: new Date().toISOString(),
+      sheetsUrl: localStorage.getItem('combatfire_sheets_url') || '',
+      catalogo: localStorage.getItem(CHAVE_STORAGE) || '[]',
+      rascunho: localStorage.getItem(CHAVE_RASCUNHO) || '',
+      numOrcamento: localStorage.getItem('combatfire_num_orcamento') || ''
+    };
+    const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const dataHoje = new Date().toLocaleDateString('pt-BR').replace(/\//g,'-');
+    a.href = url;
+    a.download = 'backup_combatfire_' + dataHoje + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('✅ Backup salvo com sucesso!', 'ok');
+  } catch(e){
+    showToast('❌ Erro ao gerar backup: ' + e.message, 'erro');
+  }
+}
+
+function restaurarBackup(){
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = function(e){
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      try{
+        const backup = JSON.parse(ev.target.result);
+        if(!backup.versao || !backup.catalogo){
+          showToast('❌ Arquivo inválido ou corrompido.', 'erro');
+          return;
+        }
+        if(!confirm('Isso vai substituir todos os dados locais (catálogo, rascunho e URL do Sheets) pelo backup. Continuar?')) return;
+
+        if(backup.sheetsUrl)    localStorage.setItem('combatfire_sheets_url', backup.sheetsUrl);
+        if(backup.catalogo)     localStorage.setItem(CHAVE_STORAGE, backup.catalogo);
+        if(backup.rascunho)     localStorage.setItem(CHAVE_RASCUNHO, backup.rascunho);
+        if(backup.numOrcamento) localStorage.setItem('combatfire_num_orcamento', backup.numOrcamento);
+
+        showToast('✅ Backup restaurado! Recarregando...', 'ok');
+        setTimeout(() => location.reload(), 1800);
+      } catch(err){
+        showToast('❌ Erro ao ler backup: ' + err.message, 'erro');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
 </script>
 
 </body>
