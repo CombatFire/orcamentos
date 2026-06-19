@@ -1030,6 +1030,15 @@ function exportarPDF(){
 }
 
 window.addEventListener('DOMContentLoaded', function(){
+  // Marca d'água no centro da folha (usa a mesma logo do cabeçalho)
+  (function(){
+    const logoEl = document.querySelector('.cabecalho img.logo');
+    const marcaAguaEl = document.getElementById('folha-marca-agua');
+    if(logoEl && marcaAguaEl && logoEl.src){
+      marcaAguaEl.style.backgroundImage = `url("${logoEl.src}")`;
+    }
+  })();
+
   // Fechar modais ao clicar fora
   ['modal-sheets-config','modal-lista-orcamentos','modal-produtos','modal-configuracoes','modal-aviso-fechar'].forEach(id => {
     const overlay = document.getElementById(id);
