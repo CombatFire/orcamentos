@@ -522,6 +522,29 @@
   .instrucoes-sheets li{ margin-bottom:4px; }
   .instrucoes-sheets a{ color:#1a73e8; }
 
+  /* ===== MODAL CONFIGURAÇÕES ===== */
+  .btn-config-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:#fdf9f1;
+    border:1px solid #e5e0d8;
+    border-radius:8px;
+    padding:14px 16px;
+    cursor:pointer;
+    text-align:left;
+    width:100%;
+    transition: background 0.15s;
+  }
+  .btn-config-item:hover{ background:#f5efe0; border-color:#d4a017; }
+  .btn-config-icone{
+    width:42px;height:42px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;flex-shrink:0;color:#fff;
+  }
+  .btn-config-titulo{ font-weight:700;font-size:14px;color:var(--cinza-texto);margin-bottom:2px; }
+  .btn-config-desc{ font-size:12px;color:#777;line-height:1.4; }
+
   /* ===== MODAL GERENCIAR PRODUTOS ===== */
   .modal-overlay{
     display:none;
@@ -1070,11 +1093,9 @@
 
 <div class="barra-acoes">
   <button class="btn-acao btn-produtos" onclick="abrirModalProdutos()">🗂️ Gerenciar Produtos</button>
-  <button class="btn-acao btn-sheets-config" onclick="abrirModalSheets()" title="Configurar Google Sheets">⚙️ Google Sheets</button>
   <button class="btn-acao btn-sheets-lista" onclick="abrirModalListaOrcamentos()" title="Ver orçamentos salvos">📋 Orçamentos Salvos</button>
   <button class="btn-acao btn-sheets-salvar" onclick="salvarESair()" title="Salvar no Sheets e abrir novo orçamento" style="background:#1a7a1a;color:#fff;">💾 Novo</button>
-  <button class="btn-acao" onclick="fazerBackup()" title="Baixar backup de todos os dados" style="background:#6d28d9;color:#fff;">⬇️ Backup</button>
-  <button class="btn-acao" onclick="restaurarBackup()" title="Restaurar backup de arquivo" style="background:#92400e;color:#fff;">⬆️ Restaurar</button>
+  <button class="btn-acao btn-sheets-config" onclick="document.getElementById('modal-configuracoes').classList.add('ativo')" title="Configurações">⚙️ Configurações</button>
   <button class="btn-acao btn-imprimir" onclick="window.print()">🖨️ Imprimir</button>
   <button class="btn-acao btn-pdf" onclick="exportarPDF()">📄 Exportar PDF</button>
 </div>
@@ -1214,6 +1235,39 @@
 
 <!-- TOAST de notificação -->
 <div id="toast-sheets"></div>
+
+<!-- MODAL CONFIGURAÇÕES -->
+<div class="modal-overlay" id="modal-configuracoes">
+  <div class="modal-box" style="max-width:420px;">
+    <div class="modal-header">
+      <h2>⚙️ Configurações</h2>
+      <button class="modal-fechar" onclick="fecharModal('modal-configuracoes')">✕</button>
+    </div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:12px;">
+      <button class="btn-config-item" onclick="fecharModal('modal-configuracoes');abrirModalSheets();">
+        <span class="btn-config-icone" style="background:#1a73e8;">⚙️</span>
+        <div>
+          <div class="btn-config-titulo">Google Sheets</div>
+          <div class="btn-config-desc">Configurar URL do Apps Script para salvar orçamentos</div>
+        </div>
+      </button>
+      <button class="btn-config-item" onclick="fecharModal('modal-configuracoes');fazerBackup();">
+        <span class="btn-config-icone" style="background:#6d28d9;">⬇️</span>
+        <div>
+          <div class="btn-config-titulo">Fazer Backup</div>
+          <div class="btn-config-desc">Baixar arquivo com todos os dados, catálogo e URL do Sheets</div>
+        </div>
+      </button>
+      <button class="btn-config-item" onclick="fecharModal('modal-configuracoes');restaurarBackup();">
+        <span class="btn-config-icone" style="background:#92400e;">⬆️</span>
+        <div>
+          <div class="btn-config-titulo">Restaurar Backup</div>
+          <div class="btn-config-desc">Importar arquivo de backup e restaurar todos os dados</div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL CONFIGURAR GOOGLE SHEETS -->
 <div class="modal-overlay" id="modal-sheets-config">
@@ -2294,7 +2348,7 @@ function exportarPDF(){
 
 window.addEventListener('DOMContentLoaded', function(){
   // Fechar modais ao clicar fora
-  ['modal-sheets-config','modal-lista-orcamentos','modal-produtos'].forEach(id => {
+  ['modal-sheets-config','modal-lista-orcamentos','modal-produtos','modal-configuracoes'].forEach(id => {
     const overlay = document.getElementById(id);
     if(overlay) overlay.addEventListener('click', function(e){
       if(e.target === overlay) overlay.classList.remove('ativo');
