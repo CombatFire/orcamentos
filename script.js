@@ -1048,6 +1048,12 @@ window.addEventListener('DOMContentLoaded', function(){
       { nome: 'Visita Técnica / Vistoria', preco: 200.00 },
     ]);
   }
+  // Se o sistema já estava aberto antes de atualizar a página, não mostra a splash de novo
+  const splashEl = document.getElementById('splash');
+  if(splashEl && localStorage.getItem('combatfire_splash_estado') === 'aberto'){
+    splashEl.classList.add('hidden');
+  }
+
   const rascunho = false; // sempre inicia novo
   if(rascunho){
     preencherFormulario(rascunho);
@@ -1077,6 +1083,7 @@ function abrirSistema(){
   const splash = document.getElementById('splash');
   splash.classList.add('fadeout');
   setTimeout(() => splash.classList.add('hidden'), 550);
+  localStorage.setItem('combatfire_splash_estado', 'aberto');
 }
 
 function fecharSistema(){
@@ -1092,6 +1099,7 @@ function fecharSistemaConfirmado(){
   splash.classList.remove('hidden');
   // pequeno delay pra remover fadeout após display voltar
   setTimeout(() => splash.classList.remove('fadeout'), 20);
+  localStorage.setItem('combatfire_splash_estado', 'fechado');
 }
 
 // Fecha o popup de aviso e fecha o sistema mesmo sem salvar (descarta alterações)
